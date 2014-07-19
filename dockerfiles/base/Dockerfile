@@ -1,7 +1,7 @@
 FROM node
 
 RUN apt-get update
-RUN apt-get install -y vim emacs screen tmux
+RUN apt-get install -y vim emacs screen tmux nano curl wget
 RUN npm install hipster -g
 
 RUN mkdir /expose

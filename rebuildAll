@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var spawn = require('child_process').spawn;
+
+fs.readdir('./dockerfiles', function (err, folders) {
+  if (err) throw err;
+  folders = ['base'].concat(folders.filter(function (folder) {
+	return folder !== 'base';
+  }));
+  (function build (folder) {
+    console.log(folder);
+    var dockerBuild = spawn('docker', [
+      'build',
+      //'--no-cache',
+      '-t',
+      'nodeschool/' + folder,
+      'dockerfiles/' + folder
+    ], { stdio: 'inherit' });
+    dockerBuild.on('close', function () {
+      if (folders.length) {
+        build(folders.shift());
+      }
+    });
+  })(folders.shift());
+});
