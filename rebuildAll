@@ -12,7 +12,7 @@ fs.readdir('./dockerfiles', function (err, folders) {
     console.log(folder);
     var dockerBuild = spawn('docker', [
       'build',
-      '--no-cache',
+      //'--no-cache',
       '-t',
       'nodeschool/' + folder,
       'dockerfiles/' + folder

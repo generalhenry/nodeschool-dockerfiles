@@ -8,12 +8,12 @@ RUN n stable
 
 RUN mkdir /expose
 WORKDIR /expose
-RUN npm install expose-bash-over-websockets
+RUN npm install expose-bash-over-websockets http-proxy
+ADD proxy.js /expose/proxy.js
 
 WORKDIR /root
 
-EXPOSE 80
-CMD n use $(n --stable) /expose/node_modules/expose-bash-over-websockets/server.js
+CMD n use $(n --stable) /expose/proxy.js
 
 ADD initfile /root/.initfile
 ONBUILD ADD initfile /root/.initfile
